@@ -38,3 +38,6 @@ like range(a, b)
 NULL is not a value.
 
 How to test in SQL: X is null
+
+TODO:
+----
