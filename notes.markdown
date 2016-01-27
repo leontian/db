@@ -153,5 +153,70 @@ SINGLE TABLE
       check (discriminator != 'Student' OR major is not null)
     );
 
+Jan 26, 2016
+============
+HW2
+select from where
+
+select p.name
+from Person p, Instrument i, plays y, playsSong ps
+where ps.song = 'Quiet City'
+  and p.id = y.person
+  and y.instrument = i.id
+  and i.name = 'trmpet'
+  and ps.person = y.person
+  and ps.instrument = y.instrument
+
+number of tables - 1 = number of joint constrains
+
+'as' optional keyword, from Person as p
+
+use aliases, good style
+
+select p.name
+from Person p  join plays y
+  on (p.id = y.person) join instrument  i 
+  on (i.id = y.instrument) join playsSong s
+  on (s.person = y.perosn and s.instrument = y.instrument)
+whwere i.name = 'trumpet' and s.song = 'Quiet City'
+
+left outter join
+---------------
+
+select p.name, i.name // select distint i.name
+from Person p left join
+  plays y on (p.id = y.person)
+  join Instrument i on (i.id = y.instrument)
+where p.name is null
+
+
+anti-join
+----------
+
+select i.id
+  from Instrument i
+  where not exists {
+        select *
+        from playSong s
+        where s.song = 'Moldau'
+        and i.id = s.instrument}
+
+semi-join
+---------
+
+select i.id
+  from Instrument i
+  where exists {
+    select *
+    from playsSongs s
+where i.id = s.instrument
+and s.name like 'M%'  
+}
+
+% 0 or more character
+_ exactly on character
+
+order by i.name, i.id
 TODO:
 ----
+
