@@ -229,6 +229,12 @@ Difference between querying many to many and many to one
 
 HW wording fix: metals in each solid phase alloy
 
+SQL
+---
+- insert
+- update
+- delete
+
 TODO:
 ----
 

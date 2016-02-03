@@ -8,7 +8,7 @@ create table Company (
         id int primary key auto_increment
 );
 
-create table companyName (
+create table CompanyName (
         company int references Company(id)
           on update cascade on delete cascade,
         name varchar(250),
@@ -59,7 +59,7 @@ select p.name
 -- named "First Bank" that does not employ the person
 -- Rewrite again:
 -- Find the names and dob of all persons p such that there does not exist a company c
--- such that there exists a companyName n such that n.name = "First Bank" 
+-- such that there exists a CompanyName n such that n.name = "First Bank" 
 -- and such that there does not exist an Employment e such that e.employs is p.id
 -- and e.employedBy is c.id
 
@@ -68,7 +68,7 @@ select p.name, p.dob
   where not exists (
         select * from Company c
         where exists (
-                select * from companyName n
+                select * from CompanyName n
                 where n.name = 'First Bank'
                   and not exists (
                         select *
@@ -101,3 +101,31 @@ select p.name n, count(*) as ct
   where p.id = e.employs
 group by p.id
 having ct >= 3
+
+-- Insert
+insert into Person(name, dob)
+  values ('Divya', '2016-02-01'),
+
+insert into Employment(employs, employedBy, position)
+  select p.id, c.id, 'CEO'
+    from Person p, Company c, CompanyName n
+    where p.name = 'Divya'
+      and c.id = n.company
+      and n.name = 'Google'
+-- Delete
+delete from Company
+where exists (
+        select *
+        from CompanyName n
+        where n.company = id
+          and n.name = 'Google'
+)
+-- Updated
+update Employment
+  set salary = 2 * salary
+  where exists (
+        select *
+          from Person p
+          where p.id = employs
+            and p.name = 'Mark'
+)
