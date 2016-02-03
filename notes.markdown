@@ -217,6 +217,18 @@ and s.name like 'M%'
 _ exactly on character
 
 order by i.name, i.id
+
+Feb 2, 2016
+===========
+
+NULL
+----
+sample 2-2.sql
+
+Difference between querying many to many and many to one
+
+HW wording fix: metals in each solid phase alloy
+
 TODO:
 ----
 
