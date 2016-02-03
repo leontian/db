@@ -78,4 +78,26 @@ select p.name, p.dob
         )
 )
 
+-- Example 3:
+-- Find the name and number of jobs of each person
 
+select p.name, count(*)
+  from Person p, Employment e
+  where p.id = e.employs
+group by p.id
+union
+select p.name, 0
+  from Person p
+  where not exists (
+        select *
+        from Employment e
+        where e.employs = p.id
+)
+
+-- Example 4:
+-- having
+select p.name n, count(*) as ct
+  from Person p, Employment e
+  where p.id = e.employs
+group by p.id
+having ct >= 3
